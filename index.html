@@ -1,17 +1,14 @@
 <head>
-  <script>
-  // 這段程式碼會將資料送到你的後端 API
+ <script>
   function trackPageView() {
-    // 取得當前頁面的 URL
-    const pageUrl = window.location.href;
-
-    // 定義要傳送的資料
     const payload = {
-      page: pageUrl
+      page: window.location.pathname // 只追蹤路徑，不包含網址
     };
 
-    // 使用 fetch API 將資料傳送到你的後端伺服器
-    fetch('https://你的後端網址/api/track', {
+    // 這是你未來會部署的伺服器網址
+    const serverUrl = 'https://你的Vercel網址/api/track';
+
+    fetch(serverUrl, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -19,18 +16,15 @@
       body: JSON.stringify(payload)
     })
     .then(response => {
-      // 檢查回應是否成功
       if (!response.ok) {
         console.error('Failed to send page view data.');
       }
     })
     .catch(error => {
-      // 處理網路錯誤
       console.error('Network error:', error);
     });
   }
 
-  // 當網頁載入完成時，執行追蹤函式
   window.addEventListener('load', trackPageView);
 </script>
 </head>
